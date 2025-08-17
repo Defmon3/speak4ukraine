@@ -1,0 +1,35 @@
+[
+  {
+    "id": "mep-1",
+    "fullName": "Mika AALTOLA",
+    "group": "Group of the European People's Party (Christian Democrats)",
+    "country": "Finland",
+    "party": "Kansallinen Kokoomus",
+    "imageSource": "https://www.europarl.europa.eu/mepphoto/256810.jpg",
+    "contactInformation": {
+      "email": "mika.aaltola@europarl.europa.eu"
+    }
+  },
+  {
+    "id": "mep-13",
+    "fullName": "Li ANDERSSON",
+    "group": "The Left group in the European Parliament - GUE/NGL",
+    "country": "Finland",
+    "party": "Vasemmistoliitto",
+    "imageSource": "https://www.europarl.europa.eu/mepphoto/256805.jpg",
+    "contactInformation": {
+      "email": "li.andersson@europarl.europa.eu"
+    }
+  },
+  {
+    "id": "mep-272",
+    "fullName": "Eero HEINÄLUOMA",
+    "group": "Group of the Progressive Alliance of Socialists and Democrats in the European Parliament",
+    "country": "Finland",
+    "party": "Suomen Sosialidemokraattinen Puolue/Finlands Socialdemokratiska Parti",
+    "imageSource": "https://www.europarl.europa.eu/mepphoto/197800.jpg",
+    "contactInformation": {
+      "email": "eero.heinaluoma@europarl.europa.eu"
+    }
+  }
+]

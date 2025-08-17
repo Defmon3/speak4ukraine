@@ -1,0 +1,46 @@
+[
+  {
+    "id": "mep-10",
+    "fullName": "Abir AL-SAHLANI",
+    "group": "Renew Europe Group",
+    "country": "Sweden",
+    "party": "Centerpartiet",
+    "imageSource": "https://www.europarl.europa.eu/mepphoto/197400.jpg",
+    "contactInformation": {
+      "email": "abir.alsahlani@europarl.europa.eu"
+    }
+  },
+  {
+    "id": "mep-339",
+    "fullName": "Alice KUHNKE",
+    "group": "Group of the Greens/European Free Alliance",
+    "country": "Sweden",
+    "party": "Miljöpartiet de gröna",
+    "imageSource": "https://www.europarl.europa.eu/mepphoto/197395.jpg",
+    "contactInformation": {
+      "email": "alice.kuhnke@europarl.europa.eu"
+    }
+  },
+  {
+    "id": "mep-690",
+    "fullName": "Charlie WEIMERS",
+    "group": "European Conservatives and Reformists Group",
+    "country": "Sweden",
+    "party": "Sverigedemokraterna",
+    "imageSource": "https://www.europarl.europa.eu/mepphoto/123562.jpg",
+    "contactInformation": {
+      "email": "charlie.weimers@europarl.europa.eu"
+    }
+  },
+  {
+    "id": "mep-201",
+    "fullName": "Heléne FRITZON",
+    "group": "Group of the Progressive Alliance of Socialists and Democrats in the European Parliament",
+    "country": "Sweden",
+    "party": "Arbetarepartiet- Socialdemokraterna",
+    "imageSource": "https://www.europarl.europa.eu/mepphoto/197391.jpg",
+    "contactInformation": {
+      "email": "helene.fritzon@europarl.europa.eu"
+    }
+  }
+]

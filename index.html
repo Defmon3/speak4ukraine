@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stand With Ukraine - Contact Your Representatives</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <header class="landing-header">
+        <div class="container">
+            <h1>Your Voice Matters: Act for Ukraine</h1>
+            <p class="subtitle">Use our tool to email your representatives and demand stronger support for Ukraine.</p>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- WIDGET 1: LANDING AND INFORMATION -->
+        <section id="landing-widget">
+            <h2>Stand with Ukraine. Make Your Voice Heard.</h2>
+            <p>
+                Every day, Ukraine fights for its freedom and for the democratic values that unite us. Your elected officials have the power to provide critical support, but they need to hear from you—their constituent. A personal email is one of the most effective ways to make your voice count.
+            </p>
+            <div class="bullet-points">
+                <ul>
+                    <li>
+                        <span class="bullet-icon">✔</span>
+                        <div>
+                            <strong>Reinforce the Mandate:</strong> Show your representatives that supporting Ukraine is a political priority for voters.
+                        </div>
+                    </li>
+                    <li>
+                        <span class="bullet-icon">✔</span>
+                        <div>
+                            <strong>Demand Action:</strong> Urge them to vote for crucial security, humanitarian, and economic aid packages without delay.
+                        </div>
+                    </li>
+                    <li>
+                        <span class="bullet-icon">✔</span>
+                        <div>
+                            <strong>It's Fast and Effective:</strong> This tool simplifies the process. In just a few minutes, you can send a powerful message directly to decision-makers.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <button id="proceed-button" class="button-primary-large">Take Action Now</button>
+        </section>
+
+        <!-- WIDGET 2: EMAIL TOOL (Initially Hidden) -->
+        <section id="email-tool-widget" class="hidden">
+            <div class="app-container">
+                <header class="app-header">
+                    <button id="back-button" class="button-tertiary">← Back</button>
+                    <h2>Send to Your Representatives</h2>
+                </header>
+                <main>
+                    <div class="controls">
+                        <div class="country-selector-wrapper">
+                            <label for="country-selector">Legislature:</label>
+                            <select id="country-selector">
+                                <option value="eu-sweden">EU Parliament - Sweden</option>
+                                <option value="eu-finland">EU Parliament - Finland</option>
+                                <option value="eu-spain">EU Parliament - Spain</option>
+                                <!-- Add more .json files to the /data/ folder and they will work here -->
+                            </select>
+                        </div>
+                        <div class="action-buttons">
+                            <button id="select-all-button" class="button-secondary">Select All</button>
+                        </div>
+                    </div>
+
+                    <div id="representatives-grid" class="representatives-grid">
+                        <!-- JS will populate this -->
+                    </div>
+
+                    <div class="selection-summary">
+                        <p>Selected: <span id="selected-count">0</span> representatives.</p>
+                    </div>
+
+                    <div class="message-section">
+                        <h3>Final Message Preview</h3>
+                        <textarea id="email-body" rows="12">Dear Representatives,
+
+I am writing as your constituent to urge you to increase support for Ukraine. The defense of Ukraine's sovereignty is a critical global issue that demands our unwavering commitment.
+
+We must provide robust security, humanitarian, and economic aid. Please vote in favor of all measures that strengthen Ukraine's ability to defend itself and advocate for stronger sanctions against the aggressor.
+
+Your leadership on this is essential. I am counting on you to stand firmly with Ukraine.
+
+Sincerely,
+[Your Name]
+[Your City, Postal Code]</textarea>
+
+                        <div class="final-actions">
+                            <button id="send-emails-button" class="button-primary">Send Emails</button>
+                            <p class="manual-copy-text">You can also copy the message and email addresses to send manually.</p>
+                            <div class="copy-buttons">
+                                <button id="copy-message-button" class="button-tertiary">Copy Message</button>
+                                <button id="copy-emails-button" class="button-tertiary">Copy Email Addresses</button>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Glory to Ukraine! Slava Ukraini!</p>
+    </footer>
+
+</body>
+</html>

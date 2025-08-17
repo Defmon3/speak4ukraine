@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* --- Global & Mobile-First Styles --- */
+:root {
+    --ukraine-blue: #005BBB;
+    --ukraine-yellow: #FFD500;
+    --primary-red: #D32F2F;
+    --background-color: #f4f4f9;
+    --container-bg: #ffffff;
+    --text-primary: #1c1e21;
+    --text-secondary: #65676b;
+    --border-color: #ced0d4;
+    --primary-accent: #0d6efd;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; line-height: 1.6; background-color: var(--background-color); color: var(--text-primary); }
+.container { max-width: 900px; margin: 0 auto; padding: 15px; }
+.hidden { display: none !important; }
+
+/* --- Header & Footer --- */
+.landing-header { background-color: var(--ukraine-blue); color: white; padding: 25px 0; text-align: center; border-bottom: 5px solid var(--ukraine-yellow); }
+.landing-header h1 { margin: 0; font-size: 1.8em; }
+.landing-header .subtitle { margin-top: 10px; font-size: 1.1em; opacity: 0.9; }
+footer { text-align: center; padding: 20px; color: #777; font-style: italic; }
+
+/* --- WIDGET 1: Landing Styles --- */
+#landing-widget { background: white; padding: 25px 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+#landing-widget h2 { color: var(--ukraine-blue); font-size: 1.5em; border-bottom: 2px solid var(--ukraine-yellow); padding-bottom: 10px; margin-bottom: 15px; }
+#landing-widget p { margin-bottom: 20px; }
+.bullet-points ul { list-style-type: none; padding-left: 0; }
+.bullet-points li { display: flex; align-items: flex-start; margin-bottom: 15px; }
+.bullet-icon { color: var(--ukraine-blue); font-weight: bold; margin-right: 15px; font-size: 1.2em; line-height: 1.4; }
+.button-primary-large { background-color: var(--ukraine-blue); color: white; font-size: 1.2em; padding: 15px 30px; border: none; border-radius: 8px; cursor: pointer; display: block; width: 100%; max-width: 300px; margin: 25px auto 0; }
+.button-primary-large:hover { background-color: #004a99; }
+
+/* --- WIDGET 2: Email Tool App Styles --- */
+#email-tool-widget { padding: 0; background: none; box-shadow: none; }
+.app-container { background-color: var(--container-bg); border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); padding: 15px; border: 1px solid var(--border-color); }
+.app-header { text-align: center; margin-bottom: 20px; position: relative; } /* Needed for back button */
+.app-header h2 { font-size: 1.6em; font-weight: 700; border: none; }
+.controls { display: flex; flex-direction: column; gap: 15px; padding: 16px; background-color: #f9f9fb; border-radius: 8px; margin-bottom: 24px; border: 1px solid var(--border-color); }
+.country-selector-wrapper, .action-buttons { width: 100%; }
+#country-selector { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 16px; }
+.representatives-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 24px; }
+.error-message { color: var(--primary-red); font-style: italic; }
+.representative-card { display: flex; align-items: center; padding: 12px; border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; transition: all 0.2s ease-in-out; position: relative; overflow: hidden; }
+.representative-card:hover { border-color: #8a96a8; }
+.representative-card.selected { border-color: var(--primary-accent); background-color: #f0f8ff; }
+.rep-photo { width: 50px; height: 50px; border-radius: 50%; margin-right: 12px; object-fit: cover; flex-shrink: 0; }
+.rep-info { flex-grow: 1; min-width: 0; }
+.rep-name { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rep-party { color: var(--text-secondary); font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.checkmark-icon { position: absolute; top: 8px; right: 8px; width: 20px; height: 20px; background-color: var(--primary-accent); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; transform: scale(0); transition: transform 0.2s ease-in-out; }
+.representative-card.selected .checkmark-icon { transform: scale(1); }
+.selection-summary { text-align: center; font-weight: 500; color: var(--text-secondary); padding: 16px; background-color: #f9f9fb; border-radius: 8px; border: 1px solid var(--border-color); }
+.selection-summary span { font-weight: 700; color: var(--text-primary); }
+.message-section { margin-top: 32px; }
+#email-body { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 15px; line-height: 1.6; font-family: 'Inter', sans-serif; resize: vertical; }
+.final-actions { text-align: center; margin-top: 24px; }
+.manual-copy-text { margin: 16px 0; color: var(--text-secondary); font-size: 0.9em;}
+.copy-buttons { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.copy-buttons button { width: 100%; max-width: 250px; }
+#back-button { position: absolute; top: 0; left: 0; width: auto; padding: 8px 12px; font-size: 14px; }
+
+/* --- General Button Styles --- */
+button { border: none; border-radius: 6px; padding: 12px 24px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; width: 100%; }
+.button-primary { background-color: var(--primary-red); color: white; }
+.button-primary:hover { background-color: #b71c1c; }
+.button-secondary { background-color: transparent; border: 1px solid var(--border-color); color: var(--text-primary); max-width: 250px; margin: 0 auto; }
+.button-secondary:hover { background-color: #f0f2f5; }
+.button-tertiary { background-color: #e4e6eb; color: var(--text-primary); }
+.button-tertiary:hover { background-color: #d8dbdf; }
+
+/* --- Responsive Design for Larger Screens --- */
+@media (min-width: 600px) {
+    .container { padding: 20px; }
+    .landing-header h1 { font-size: 2.2em; }
+    #landing-widget h2 { font-size: 1.8em; }
+    .app-header h2 { font-size: 1.8em; }
+    .app-container { padding: 24px; }
+    .controls { flex-direction: row; }
+    .country-selector-wrapper, .action-buttons { width: auto; }
+    button.button-secondary { width: auto; }
+    .representatives-grid { grid-template-columns: repeat(2, 1fr); }
+    .copy-buttons { flex-direction: row; }
+    .copy-buttons button { width: auto; }
+}
+
+@media (min-width: 900px) {
+    .landing-header h1 { font-size: 2.5em; }
+    .representatives-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+}

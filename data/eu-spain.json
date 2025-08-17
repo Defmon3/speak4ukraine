@@ -1,0 +1,35 @@
+[
+    {
+      "id": "mep-2",
+      "fullName": "Maravillas ABADÍA JOVER",
+      "group": "Group of the European People's Party (Christian Democrats)",
+      "country": "Spain",
+      "party": "Partido Popular",
+      "imageSource": "https://www.europarl.europa.eu/mepphoto/257043.jpg",
+      "contactInformation": {
+        "email": "maravillas.abadiajover@europarl.europa.eu"
+      }
+    },
+    {
+      "id": "mep-5",
+      "fullName": "Oihane AGIRREGOITIA MARTÍNEZ",
+      "group": "Renew Europe Group",
+      "country": "Spain",
+      "party": "Partido Nacionalista Vasco",
+      "imageSource": "https://www.europarl.europa.eu/mepphoto/256987.jpg",
+      "contactInformation": {
+        "email": "oihane.agirregoitiamartinez@europarl.europa.eu"
+      }
+    },
+    {
+      "id": "mep-212",
+      "fullName": "Iratxe GARCÍA PÉREZ",
+      "group": "Group of the Progressive Alliance of Socialists and Democrats in the European Parliament",
+      "country": "Spain",
+      "party": "Partido Socialista Obrero Español",
+      "imageSource": "https://www.europarl.europa.eu/mepphoto/28298.jpg",
+      "contactInformation": {
+        "email": "iratxe.garcia-perez@europarl.europa.eu"
+      }
+    }
+]
