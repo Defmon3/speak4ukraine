@@ -11,14 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
     proceedButton.addEventListener('click', () => {
         landingWidget.classList.add('hidden');
         emailToolWidget.classList.remove('hidden');
-        // Scroll to the top of the tool for a smooth transition, especially on mobile
         emailToolWidget.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // After showing the tool, trigger the initial data load
+        // Using `void` to explicitly ignore the returned promise.
+        void fetchAndRenderRepresentatives(countrySelector.value);
     });
 
     backButton.addEventListener('click', () => {
         landingWidget.classList.remove('hidden');
         emailToolWidget.classList.add('hidden');
-        // Scroll back to the top of the page
         landingWidget.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
@@ -123,13 +124,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- EVENT LISTENERS for the Email Tool ---
 
-    // Initial data load
-    fetchAndRenderRepresentatives(countrySelector.value);
-
     // Handle legislature changes
     countrySelector.addEventListener('change', (e) => {
         selectedIds.clear();
-        fetchAndRenderRepresentatives(e.target.value);
+        // Using `void` to explicitly ignore the returned promise.
+        void fetchAndRenderRepresentatives(e.target.value);
     });
 
     // Handle clicks on representative cards
@@ -178,6 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handle "Copy Message" button
     copyMessageButton.addEventListener('click', () => {
+        // Here we DO handle the promise with .then(), so `void` is not needed.
         navigator.clipboard.writeText(emailBodyEl.value).then(() => {
             alert('Message copied to clipboard!');
         }).catch(err => console.error('Failed to copy message:', err));
@@ -193,6 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .filter(rep => selectedIds.has(rep.id) && rep.email !== 'email-not-available')
             .map(rep => rep.email);
 
+        // We also handle this promise, so no `void` needed.
         navigator.clipboard.writeText(emailList.join(', ')).then(() => {
             alert(`${emailList.length} email address(es) copied to clipboard!`);
         }).catch(err => console.error('Failed to copy emails:', err));
