@@ -12,7 +12,7 @@
     <header class="landing-header">
         <div class="container">
             <h1>Speak up for Ukraine</h1>
-            <p class="subtitle">Your Voice Matters, use the tool to email your representatives and demand stronger support for Ukraine.</p>
+            <p class="subtitle">Your Voice Matters: Use the tool to email your representatives and demand stronger support for Ukraine.</p>
         </div>
     </header>
 
@@ -20,7 +20,6 @@
 
         <!-- WIDGET 1: LANDING AND INFORMATION -->
         <section id="landing-widget">
-
             <p>
                 Every day, Ukraine fights for its freedom and for the democratic values that unite us. Your elected officials have the power to provide critical support, but they need to hear from you—their constituent. A personal email is one of the most effective ways to make your voice count.
             </p>
@@ -58,13 +57,10 @@
                 </header>
                 <main>
                     <div class="controls">
-                        <div class="country-selector-wrapper">
-                            <label for="country-selector">Legislature:</label>
+                        <div class="controls-flex-group">
+                            <label for="country-selector">Country:</label>
                             <select id="country-selector">
-                                <option value="eu-sweden">EU Parliament - Sweden</option>
-                                <option value="eu-finland">EU Parliament - Finland</option>
-                                <option value="eu-spain">EU Parliament - Spain</option>
-                                <!-- Add more .json files to the /data/ folder and they will work here -->
+                                <option value="">-- Please Select a Country --</option>
                             </select>
                         </div>
                         <div class="action-buttons">
@@ -81,7 +77,7 @@
                     </div>
 
                     <div class="message-section">
-                        <h3>Final Message Preview</h3>
+                        <h3>Message Preview</h3>
                         <textarea id="email-body" rows="12">Dear Representatives,
 
 I am writing as your constituent to urge you to increase support for Ukraine. The defense of Ukraine's sovereignty is a critical global issue that demands our unwavering commitment.
@@ -91,8 +87,7 @@ We must provide robust security, humanitarian, and economic aid. Please vote in 
 Your leadership on this is essential. I am counting on you to stand firmly with Ukraine.
 
 Sincerely,
-[Your Name]
-[Your City, Postal Code]</textarea>
+[Your Name]</textarea>
 
                         <div class="final-actions">
                             <button id="send-emails-button" class="button-primary">Send Emails</button>

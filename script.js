@@ -1,36 +1,16 @@
-// --- SCRIPT INITIALIZATION ---
-// This main event listener waits for the HTML to be fully loaded before running any code.
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- WIDGET SWITCHING LOGIC ---
+    // --- WIDGET & GLOBAL STATE MANAGEMENT ---
     const landingWidget = document.getElementById('landing-widget');
     const emailToolWidget = document.getElementById('email-tool-widget');
     const proceedButton = document.getElementById('proceed-button');
     const backButton = document.getElementById('back-button');
 
-    proceedButton.addEventListener('click', () => {
-        landingWidget.classList.add('hidden');
-        emailToolWidget.classList.remove('hidden');
-        emailToolWidget.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        // After showing the tool, trigger the initial data load
-        // Using `void` to explicitly ignore the returned promise.
-        void fetchAndRenderRepresentatives(countrySelector.value);
-    });
+    let allReps = [];
+    let currentReps = [];
+    let selectedIds = new Set();
 
-    backButton.addEventListener('click', () => {
-        landingWidget.classList.remove('hidden');
-        emailToolWidget.classList.add('hidden');
-        landingWidget.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-
-    // --- EMAIL TOOL LOGIC STARTS HERE ---
-
-    // State Management: Variables to hold our data
-    let allRepsData = {}; // Cache to store fetched data to avoid re-loading
-    let currentReps = []; // Array of representatives for the currently selected legislature
-    let selectedIds = new Set(); // A Set to efficiently track selected representative IDs
-
-    // DOM Elements for the email tool
+    // --- DOM ELEMENTS FOR THE TOOL ---
     const grid = document.getElementById('representatives-grid');
     const countrySelector = document.getElementById('country-selector');
     const selectedCountEl = document.getElementById('selected-count');
@@ -40,53 +20,87 @@ document.addEventListener('DOMContentLoaded', () => {
     const copyEmailsButton = document.getElementById('copy-emails-button');
     const emailBodyEl = document.getElementById('email-body');
 
-    /**
-     * Fetches representative data from a JSON file.
-     * Caches results to avoid re-fetching the same file.
-     * @param {string} legislatureCode - The identifier (e.g., 'eu-sweden').
-     */
-    async function fetchAndRenderRepresentatives(legislatureCode) {
-        grid.innerHTML = '<p>Loading representatives...</p>';
+    const sendButtonEnabledText = "Send Emails";
+    const sendButtonDisabledText = `Please replace "[Your Name]" to continue`;
 
-        if (allRepsData[legislatureCode]) {
-            currentReps = allRepsData[legislatureCode];
-            renderRepresentatives();
-            return;
-        }
+
+    // --- CORE LOGIC ---
+
+    async function initializeApp() {
+        // Initial setup for the app when it becomes visible
+        updateButtonStates(); // Set initial disabled state
 
         try {
-            const response = await fetch(`data/${legislatureCode}.json`);
+            const response = await fetch('representatives.json');
             if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+            const data = await response.json();
 
-            const rawData = await response.json();
-
-            // Transform raw data into the format our app uses
-            currentReps = rawData.map(rep => ({
+            allReps = data.representatives.map(rep => ({
                 id: rep.id,
                 name: rep.fullName,
                 party: rep.party,
-                email: rep.contactInformation?.email || 'email-not-available', // Safely access nested email
-                photo: rep.imageSource
+                country: rep.country,
+                email: rep.contactInformation?.email || 'email-not-available',
+                photo: rep.imageSource || 'https://via.placeholder.com/50/B0BEC5/455A64?Text=No+Img'
             }));
 
-            allRepsData[legislatureCode] = currentReps; // Cache the processed data
-            renderRepresentatives();
+            populateCountrySelector();
+            grid.innerHTML = '<p class="grid-placeholder">Please select a country from the dropdown above.</p>';
         } catch (error) {
-            console.error("Failed to fetch representatives:", error);
-            grid.innerHTML = `<p class="error-message">Error: Could not load representative data. Please try refreshing the page.</p>`;
+            console.error("Fatal Error: Could not initialize app.", error);
+            grid.innerHTML = `<p class="error-message">Could not load representative data. Please try refreshing the page.</p>`;
+            countrySelector.innerHTML = `<option>Error</option>`;
         }
     }
 
-    /**
-     * Renders the representative cards into the grid based on the `currentReps` array.
-     */
-    function renderRepresentatives() {
-        grid.innerHTML = '';
-        if (!currentReps || currentReps.length === 0) {
-            grid.innerHTML = '<p>No representatives found for this selection.</p>';
+    function updateButtonStates() {
+        const isPlaceholderPresent = emailBodyEl.value.includes('[Your Name]');
+
+        sendEmailsButton.disabled = isPlaceholderPresent;
+        copyMessageButton.disabled = isPlaceholderPresent;
+        copyEmailsButton.disabled = isPlaceholderPresent;
+
+        if (isPlaceholderPresent) {
+            sendEmailsButton.textContent = sendButtonDisabledText;
+        } else {
+            sendEmailsButton.textContent = sendButtonEnabledText;
+        }
+    }
+
+    function populateCountrySelector() {
+        const countries = [...new Set(allReps.map(rep => rep.country))].sort();
+        countrySelector.innerHTML = '';
+
+        const placeholder = document.createElement('option');
+        placeholder.value = "";
+        placeholder.textContent = "-- Please Select a Country --";
+        countrySelector.appendChild(placeholder);
+
+        countries.forEach(country => {
+            const option = document.createElement('option');
+            option.value = country;
+            option.textContent = country;
+            countrySelector.appendChild(option);
+        });
+    }
+
+    function filterAndRenderReps(country) {
+        selectedIds.clear();
+
+        if (!country) {
+            currentReps = [];
+            grid.innerHTML = '<p class="grid-placeholder">Please select a country from the dropdown above.</p>';
+            updateSelectionCount();
             return;
         }
 
+        grid.innerHTML = '<p class="grid-placeholder">Loading representatives...</p>';
+        currentReps = allReps.filter(rep => rep.country === country);
+        renderRepresentatives();
+    }
+
+    function renderRepresentatives() {
+        grid.innerHTML = '';
         currentReps.forEach(rep => {
             const isSelected = selectedIds.has(rep.id);
             const card = document.createElement('div');
@@ -94,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
             card.dataset.id = rep.id;
 
             card.innerHTML = `
-                <img src="${rep.photo}" alt="Photo of ${rep.name}" class="rep-photo">
+                <img src="${rep.photo}" alt="Photo of ${rep.name}" class="rep-photo" loading="lazy">
                 <div class="rep-info">
                     <p class="rep-name">${rep.name}</p>
                     <p class="rep-party">${rep.party}</p>
@@ -122,44 +136,46 @@ document.addEventListener('DOMContentLoaded', () => {
         updateSelectionCount();
     }
 
-    // --- EVENT LISTENERS for the Email Tool ---
+    // --- EVENT LISTENERS ---
 
-    // Handle legislature changes
-    countrySelector.addEventListener('change', (e) => {
-        selectedIds.clear();
-        // Using `void` to explicitly ignore the returned promise.
-        void fetchAndRenderRepresentatives(e.target.value);
+    proceedButton.addEventListener('click', () => {
+        landingWidget.classList.add('hidden');
+        emailToolWidget.classList.remove('hidden');
+        emailToolWidget.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    backButton.addEventListener('click', () => {
+        emailToolWidget.classList.add('hidden');
+        landingWidget.classList.remove('hidden');
+        landingWidget.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
-    // Handle clicks on representative cards
+    emailBodyEl.addEventListener('input', updateButtonStates);
+
+    countrySelector.addEventListener('change', (e) => filterAndRenderReps(e.target.value));
+
     grid.addEventListener('click', (e) => {
         const card = e.target.closest('.representative-card');
-        if (card) {
-            toggleSelection(card);
-        }
+        if (card) toggleSelection(card);
     });
 
-    // Handle "Select All" button
     selectAllButton.addEventListener('click', () => {
-        const allIds = currentReps.map(rep => rep.id);
-        const areAllSelected = allIds.length > 0 && allIds.every(id => selectedIds.has(id));
-
+        const allCurrentIds = currentReps.map(rep => rep.id);
+        if (allCurrentIds.length === 0) return;
+        const areAllSelected = allCurrentIds.every(id => selectedIds.has(id));
         if (areAllSelected) {
             selectedIds.clear();
         } else {
-            allIds.forEach(id => selectedIds.add(id));
+            allCurrentIds.forEach(id => selectedIds.add(id));
         }
         renderRepresentatives();
     });
 
-    // Handle "Send Emails" button
     sendEmailsButton.addEventListener('click', () => {
         if (selectedIds.size === 0) {
-            alert('Please select at least one representative to email.');
+            alert('Please select at least one representative.');
             return;
         }
-
-        const bccList = currentReps
+        const bccList = allReps
             .filter(rep => selectedIds.has(rep.id) && rep.email !== 'email-not-available')
             .map(rep => rep.email);
 
@@ -167,36 +183,31 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('None of the selected representatives have an available email address.');
             return;
         }
-
         const subject = "A message from your constituent regarding support for Ukraine";
         const body = emailBodyEl.value;
         const mailtoLink = `mailto:?bcc=${bccList.join(',')}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
         window.location.href = mailtoLink;
     });
 
-    // Handle "Copy Message" button
     copyMessageButton.addEventListener('click', () => {
-        // Here we DO handle the promise with .then(), so `void` is not needed.
-        navigator.clipboard.writeText(emailBodyEl.value).then(() => {
-            alert('Message copied to clipboard!');
-        }).catch(err => console.error('Failed to copy message:', err));
+        navigator.clipboard.writeText(emailBodyEl.value)
+            .then(() => alert('Message copied to clipboard!'))
+            .catch(err => console.error('Failed to copy message:', err));
     });
 
-    // Handle "Copy Email Addresses" button
     copyEmailsButton.addEventListener('click', () => {
         if (selectedIds.size === 0) {
             alert('Please select representatives to copy their emails.');
             return;
         }
-        const emailList = currentReps
+        const emailList = allReps
             .filter(rep => selectedIds.has(rep.id) && rep.email !== 'email-not-available')
             .map(rep => rep.email);
 
-        // We also handle this promise, so no `void` needed.
-        navigator.clipboard.writeText(emailList.join(', ')).then(() => {
-            alert(`${emailList.length} email address(es) copied to clipboard!`);
-        }).catch(err => console.error('Failed to copy emails:', err));
+        navigator.clipboard.writeText(emailList.join(', '))
+            .then(() => alert(`${emailList.length} email address(es) copied to clipboard!`))
+            .catch(err => console.error('Failed to copy emails:', err));
     });
 
-}); // End of DOMContentLoaded listener
+    void initializeApp();
+});
